@@ -18,7 +18,31 @@
 - Studio → Visual DB editor
 - Ek line me: Prisma = Translator + Bridge between JS/TS code & SQL database ✅
 
-**schema-prisma jo generate hota after init prisma karne pe**
+**schema-prisma file jo generate hota after init prisma karne pe**
 - Generator → Prisma Client code generate karta hai → JS/TS code ko DB queries me convert karega
 - Datasource → Database connection setup karta hai → Prisma Client queries run karne ke liye ready
 - Tumhare Next.js code me Prisma Client use karke CRUD karte ho
+- @ = ek field ki properties
+- @@ = puri table ki properties
+
+model User {
+  id String @id @default(cuid())        // @ for field
+  email String @unique                   // @ for field
+  name String?                           // ? = optional
+  articles Articles[]                    // [] = many
+  
+  @@index([email])                       // @@ for model
+  @@map("users")                         // @@ for model
+}
+
+## relation in model:
+- ONE-TO-MANY relation me relation ka actual code
+hamesha MANY wali table me likhte hain.
+
+-  articles Articles[]   // sirf batata hai: "mere bohot articles hain"
+
+- author User @relation(fields: [authorId], references: [id]) // Article table ka authorId User table ke id ko point karega
+  authorId String  ka mtlb =>
+==> author User Prisma me ek object / relation field hota hai, jo ye batata hai ki Article ka author ek User hai. Iska matlab ye ID store karne ke liye nahi hota, balki ye define karta hai ki Article aur User ke beech relation exist karta hai—specifically, kis user ne ye article likha hai. Actual me User ki ID database me authorId field me store hoti hai, jo ek foreign key hoti hai. author User sirf Prisma ko ye samjhata hai ki jab bhi article ka author chahiye ho, to User table se data laakar dikhaya ja sake, jabki authorId ke through ye confirm hota hai ki ye article kis specific user (User.id) se linked hai.
+
+- user User @relation(fields: [userId], references: [id]) ==> user User Prisma ke liye ek virtual field hai, 👉 Ye sirf ye batata hai: "Is comment ka user ek User hai”
