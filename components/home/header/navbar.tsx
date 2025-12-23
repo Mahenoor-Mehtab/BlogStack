@@ -6,54 +6,51 @@ import ToggleMode from "./toggle-mode";
 
 const Navbar = () => {
   return (
-    <>
-      <div className="sticky top-0 w-full border border-b bg-background/95  backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center justify-between">
-            {/* left section  */}
-            <div className="flex items-center gap-8">
-              <Link href="/" className="flex items-center space-x-2">
-                <span className="font-bold text-2xl" >
-                  <span className="bg-gradient-to-r from-purple-600 to bg-indigo-600 dark:to-indigo-400 bg-clip-text text-transparent">Byte</span>
-                  <span className="text-foreground">Code</span>
-                </span>
-              </Link>
-            </div>
+    <div className="sticky top-0 z-50 w-full border-b border-gray-800/20 bg-white/40 dark:bg-gray-900/40 backdrop-blur-lg supports-[backdrop-filter]:bg-white/30 dark:supports-[backdrop-filter]:bg-gray-900/30 transition-colors">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-1">
+            <span className="text-2xl font-extrabold tracking-tight">
+              <span className="bg-gradient-to-r from-purple-600 via-indigo-500 to-indigo-400 bg-clip-text text-transparent">
+                Byte
+              </span>
+              <span className="text-gray-900 dark:text-white">Code</span>
+            </span>
+          </Link>
 
-            {/* Desktop Menu bar  */}
-            <div className="hidden md:flex items-center gap-4 text-[10px]">
-              <Link href={'/articles'} className="text-sm font-medium text-foreground transition-colors hover:text-foreground">
-              Articles
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-6">
+            {["Articles", "Tutorial", "About", "Dashboard"].map((item, i) => (
+              <Link
+                key={i}
+                href={`/${item.toLowerCase()}`}
+                className="relative text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-indigo-500 transition-colors after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-0 after:bg-indigo-500 after:transition-all hover:after:w-full"
+              >
+                {item}
               </Link>
-               <Link href={'/tutorial'} className="text-sm font-medium text-foreground transition-colors hover:text-foreground">
-            Tutorial
-              </Link>
-               <Link href={'/about'} className="text-sm font-medium text-foreground transition-colors hover:text-foreground">
-              About
-              </Link>
-               <Link href={'/dashboard'} className="text-sm font-medium text-foreground transition-colors hover:text-foreground">
-              Dashboard
-              </Link>
-
-            </div>
-           
-
-            {/* Right Section  */}
-            <div className="flex items-center gap-4">
-               <SearchBar/>
-              <ToggleMode/>
-
-          <div className="hidden md:flex items-center gap-8">
-              <Button>Login</Button>
-            <Button>Sign-Up </Button>
+            ))}
           </div>
+
+          {/* Right Section */}
+          <div className="flex items-center gap-4">
+            <SearchBar />
+            <ToggleMode />
+
+            <div className="hidden md:flex items-center gap-3">
+              <Button className="px-5 py-2 text-sm bg-gradient-to-r from-purple-500 via-indigo-500 to-indigo-400 hover:scale-105 transform transition">
+                Login
+              </Button>
+              <Button className="px-5 py-2 text-sm border border-indigo-400 hover:bg-indigo-500 hover:text-white transform transition">
+                Sign Up
+              </Button>
             </div>
-
-
           </div>
+
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
