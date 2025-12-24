@@ -11,12 +11,12 @@ import BlogFooter from "@/components/home/BlogFooter";
 
 export default function Home() {
   return (
-    <div>
+    <div className="w-full">
       <Navbar />
       <HeroSection />
       <RotatingText />
       <section className="relative pb-5 pt-15">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto ">
           {/* Heading */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}

@@ -5,13 +5,15 @@ import Image from "next/image";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[650px] w-full overflow-hidden bg-gradient-to-br from-purple-600 via-indigo-950 to-indigo-950">
+    <section className="relative min-h-[650px] w-full overflow-hidden bg-gradient-to-br from-purple-600 via-indigo-950 to-indigo-950 w-[100%]">
       
       {/* Glow background */}
-      <div className="absolute inset-0">
-        <div className="absolute left-1/4 top-0 h-[500px] w-[500px] rounded-full bg-gradient-to-r from-violet-600/20 to-indigo-600/20 blur-3xl" />
-        <div className="absolute right-1/4 bottom-0 h-[400px] w-[400px] rounded-full bg-gradient-to-r from-indigo-600/20 to-purple-600/20 blur-3xl" />
-      </div>
+     {/* <div className="absolute inset-0 overflow-hidden">
+  <div className="absolute left-1/2 -translate-x-1/2 top-0 h-[300px] w-[300px] sm:h-[500px] rounded-full bg-gradient-to-r from-violet-600/20 to-indigo-600/20 blur-3xl" />
+
+  <div className="absolute left-1/2 -translate-x-1/2 bottom-0 h-[250px] w-[250px] sm:h-[400px] sm:w-[400px] rounded-full bg-gradient-to-r from-indigo-600/20 to-purple-600/20 blur-3xl" />
+</div> */}
+
 
       <div className="container relative mx-auto flex min-h-[650px] flex-col items-center justify-between px-6 py-24 md:flex-row md:py-32">
         
