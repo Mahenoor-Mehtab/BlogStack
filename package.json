@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev ",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "clean": "taskkill /F /IM node.exe 2>nul & timeout /t 2 /nobreak >nul & if exist .next rmdir /s /q .next"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.36.5",
