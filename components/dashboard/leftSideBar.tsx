@@ -1,23 +1,34 @@
-import React from 'react'
-import { SheetTrigger , Sheet, SheetContent } from '../ui/sheet'
+'use client'
+import React, { useState } from 'react'
+import { SheetTrigger , Sheet, SheetContent ,  SheetTitle,
+  SheetDescription, } from '../ui/sheet'
 import { Button } from '../ui/button'
 import { BarChart, FileText, LayoutDashboard, MessageCircle, Settings } from 'lucide-react'
 import Link from 'next/link'
 
 const LeftSidebar = () => {
+    const [isOpen , setIsOpen] = useState(false);
   return (
     <div>
-       <Sheet>
-        <SheetTrigger>
-            <Button className='md:hidden m-4' >
+       <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetTrigger asChild>
+            <Button className='block md:hidden m-4' variant={'outline'}>
                 <LayoutDashboard className='h-5 w-5'/>
             </Button>
         </SheetTrigger>
-        <SheetContent>
+        <SheetContent side={'left'} className='w-[234px]'>
+
+             <SheetTitle></SheetTitle>
+  <SheetDescription>
+  </SheetDescription>
             <DashboardSidebar/>
         </SheetContent>
-        
-        </Sheet> 
+ </Sheet> 
+ 
+        <div className='hidden md:block h-screen w-[250px] border-r bg-background'>
+            <DashboardSidebar/>
+
+        </div>
 
     </div>
   )

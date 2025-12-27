@@ -5,10 +5,10 @@ const Layout = ({children}:{children: React.ReactNode}) => {
   return (
     <div className='min-h-screen w-full'>
        <div className='flex'>
-        <div className='flex-1'>
              <LeftSidebar/>
-        </div>
+        <div className='flex-1'>
         {children}
+        </div>
 
        </div>
     </div>
