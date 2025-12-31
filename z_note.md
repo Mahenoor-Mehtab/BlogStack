@@ -53,7 +53,7 @@ hamesha MANY wali table me likhte hain.
 - It creates schemas (rules) to validate data.
 - Schemas run at runtime, unlike TypeScript types (compile-time only).
 
-- ➡️ Use z.object() whenever data is an object {}, even if it has one field.
+- ➡️ Use z.object() whenever data is an object {}, even if it has not one field.
 z.object({
   name: z.string(),
   age: z.number(),
@@ -80,6 +80,21 @@ Server → jo data return kare → Client ko mil jata hai
 
 - Short me, is ek line ka matlab ye hai ki React automatically server action ko client se connect karta hai, uska result client state me store karta hai, aur saath hi saath loading status ko track karta hai—bina manually API call, fetch, ya useState likhe.
 
+1️⃣ What is safeParse()?
+- safeParse() is a safe validation method in Zod.
+- It checks whether the given data matches the schema without throwing an error.
+- Instead of crashing the app, it returns a result object.
+- {success: true,  data: validatedData }
+- { success: false, error: ZodError }
 
+## FormData: 
+FormData browser ka native API hai jo form ke saare named inputs se value automatically collect karta hai. e.currentTarget actual form element hota hai, jisme inputs already apni values hold kar rahe hote hain.
 
+### FormData & e.currentTarget – 
+- e.currentTarget actual HTML <form> element hota hai, React component nahi. Jab user form ke input fields me type karta hai, browser automatically un values ko DOM elements ke andar store karta hai. Is process me React state ka hona zaroori nahi hota. Browser har input ke name attribute ke against uski current value maintain karta rehta hai.
 
+- Jab hum new FormData(e.currentTarget) likhte hain, tab FormData API form ke saare inputs ko scan karti hai. Ye sirf un elements ko pick karti hai jinke paas name attribute hota hai. Har input ka name aur uski value ko key–value pair me convert kar diya jata hai. Isliye hume manually values pass karne ki zarurat nahi padti.
+
+- Normal inputs jaise input, select, textarea ka data browser automatically FormData me add kar deta hai, kyunki ye native form elements hote hain. Lekin ReactQuill jaise custom components browser form ka part nahi hote, isliye unka data manually formData.append("content", content) se add karna padta hai.
+
+- Is poore flow me React sirf submit event handle karta hai, jabki actual data collection browser ke native form system ke through hota hai. Ye approach uncontrolled forms kehlati hai aur server actions ke saath zyada clean aur efficient hoti hai.
