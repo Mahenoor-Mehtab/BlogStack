@@ -37,9 +37,30 @@ const Layout = async ({children}:{children: React.ReactNode}) => {
           }
       })
     }
+
+    return (
+      <div>
+        {children}
+      </div>
+    );
   } catch (error) {
     console.error('Error in layout:', error);
+    // If database connection fails, still render children
+    // This prevents the app from crashing when DB is unavailable
+    if (error instanceof Error) {
+      if (error.message.includes("Can't reach database server")) {
+        console.error('⚠️ Database server is unreachable. Please check:');
+        console.error('1. Is your Neon database active? (Neon databases pause after inactivity)');
+        console.error('2. Is your DATABASE_URL correct in .env file?');
+        console.error('3. Check your Neon dashboard and wake up the database if needed');
+      }
+    }
     // Return children even if database operations fail
+    return (
+      <div>
+        {children}
+      </div>
+    );
   }
 
 

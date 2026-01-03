@@ -30,6 +30,7 @@ model Articles {
   id            String    @id @default(cuid())
   title         String
   content       String
+  category      String
   featuredImage String
   author        User      @relation(fields: [authorId], references: [id]) // Article table ka authorId User table ke id ko point karega
   authorId      String
