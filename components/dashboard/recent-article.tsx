@@ -13,8 +13,24 @@ import {
   TableRow,
 } from '../ui/table'
 import Link from 'next/link'
+import { Prisma } from '@prisma/client'
 
-const RecentArticle = () => {
+type RecentArticlesProps = {
+  articles: Prisma.ArticlesGetPayload<{
+    include:{
+      comments:true;
+      author:{
+    select:{
+      name:true ;
+      email:true;
+      imageUrl:true;
+    }
+      }
+    }
+  }>[]
+}
+
+const RecentArticle : React.FC<RecentArticlesProps> = ({articles}) => {
   return (
     <Card className="mb-8">
       <CardHeader>
@@ -27,7 +43,10 @@ const RecentArticle = () => {
         </div>
       </CardHeader>
 
-      <CardContent>
+      {
+        !articles.length ? <CardContent>No articles is found</CardContent>
+        : 
+        <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
@@ -40,9 +59,11 @@ const RecentArticle = () => {
           </TableHeader>
 
           <TableBody>
-            <TableRow>
+            {
+              articles.map((article)=>(
+                <TableRow key={article.id}>
               <TableCell className="font-medium">
-                Article Title
+             {article.title}
               </TableCell>
 
               <TableCell>
@@ -54,12 +75,12 @@ const RecentArticle = () => {
                 </Badge>
               </TableCell>
 
-              <TableCell>2</TableCell>
-              <TableCell>12 Feb 2025</TableCell>
+              <TableCell>{article.comments.length}</TableCell>
+              <TableCell>{article.createdAt.toDateString()}</TableCell>
 
               <TableCell>
                 <div className="flex gap-2">
-                  <Link href="/dashboard/articles">
+                  <Link href={`/dashboard/articles/${article.id}/edit`}>
                     <Button variant="ghost" size="sm">
                       Edit
                     </Button>
@@ -69,9 +90,17 @@ const RecentArticle = () => {
                 </div>
               </TableCell>
             </TableRow>
+
+              ))
+            }
+            
           </TableBody>
         </Table>
       </CardContent>
+
+      }
+
+      
     </Card>
   )
 }

@@ -1,10 +1,32 @@
 import React from 'react'
 import Link from 'next/link'
 import { Button } from '../ui/button'
-import { FileText, MessageCircle, PlusCircle } from 'lucide-react'
+import { Clock, FileText, MessageCircle, PlusCircle } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import RecentArticle from './recent-article'
-const BlogDashboard = () => {
+import prisma from '@/lib/prisma'
+
+const BlogDashboard = async () => {
+   const [articles , totalComments] = await Promise.all([
+    prisma.articles.findMany({
+      orderBy:{
+        createdAt:'desc'
+      },
+      include:{
+        comments:true,
+        author:{
+          select:{
+            name:true ,
+            email:true ,
+            imageUrl:true
+          }
+        }
+      }
+    }),
+
+    prisma.comment.count(),
+   ])
+
   return (
     <main className='flex-1 p-4 md:p-8'>
       <div className='flex flex-col sm:flex-row justify-between items-center mb-8 '>
@@ -32,7 +54,7 @@ const BlogDashboard = () => {
 
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>2 </div>
+            <div className='text-2xl font-bold'>{articles.length} </div>
               <p>+5 from last month</p>
           </CardContent>
         </Card>
@@ -46,7 +68,7 @@ const BlogDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className='text-2xl font-bold'>
-100</div>
+{totalComments}</div>
               <p>12 awaiting moderation</p>
           </CardContent>
         </Card>
@@ -55,7 +77,7 @@ const BlogDashboard = () => {
             <CardTitle className='font-medium text-sm'>
              Avg. Rating Time
             </CardTitle>
-            <MessageCircle className='h-4 w-4'/>
+            <Clock className='h-4 w-4'/>
 
           </CardHeader>
           <CardContent>
@@ -63,9 +85,9 @@ const BlogDashboard = () => {
 4.2</div>
               <p>+0.6 from last month</p>
           </CardContent>
-        </Card>
+      </Card>
       </div>
-<RecentArticle/>
+<RecentArticle articles={articles}/>
 
     </main>
   )
